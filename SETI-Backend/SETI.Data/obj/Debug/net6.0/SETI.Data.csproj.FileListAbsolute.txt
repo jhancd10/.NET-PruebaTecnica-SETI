@@ -1,0 +1,12 @@
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\bin\Debug\net6.0\SETI.Data.deps.json
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\bin\Debug\net6.0\SETI.Data.dll
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\bin\Debug\net6.0\SETI.Data.pdb
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.csproj.AssemblyReference.cache
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.AssemblyInfoInputs.cache
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.AssemblyInfo.cs
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.csproj.CoreCompileInputs.cache
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.dll
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\refint\SETI.Data.dll
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\SETI.Data.pdb
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.Data\obj\Debug\net6.0\ref\SETI.Data.dll

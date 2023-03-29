@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\SETI.WebApi.props" />
+</Project>

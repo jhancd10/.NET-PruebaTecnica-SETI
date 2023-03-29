@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "fW5SuQJswywzUUQkNdycsEIZ889zxWtLIkbWiM7SoIo=",
+  "Source": "SETI.WebApi",
+  "BasePath": "_content/SETI.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

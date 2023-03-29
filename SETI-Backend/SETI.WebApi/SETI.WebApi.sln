@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SETI.WebApi", "SETI.WebApi.csproj", "{C75F7EE5-0B65-4131-9473-AD7CA1E6C6CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SETI.Data", "..\SETI.Data\SETI.Data.csproj", "{563A0182-1C28-47B2-AA7E-089D68C728A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C75F7EE5-0B65-4131-9473-AD7CA1E6C6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C75F7EE5-0B65-4131-9473-AD7CA1E6C6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C75F7EE5-0B65-4131-9473-AD7CA1E6C6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C75F7EE5-0B65-4131-9473-AD7CA1E6C6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8F31682-362D-4EDE-8696-05A909158086}
+	EndGlobalSection
+EndGlobal
