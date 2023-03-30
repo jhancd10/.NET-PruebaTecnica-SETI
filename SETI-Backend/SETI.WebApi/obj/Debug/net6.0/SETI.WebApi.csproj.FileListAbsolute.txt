@@ -69,3 +69,5 @@ C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecn
 C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.WebApi\bin\Debug\net6.0\SETI.Data.pdb
 C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.WebApi\bin\Debug\net6.0\Humanizer.dll
 C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.WebApi\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.WebApi\bin\Debug\net6.0\SETI.Core.dll
+C:\Users\jeanc\OneDrive\Escritorio\SETI\PruebaTecnica\Desarrollo\.NET-PruebaTecnica-SETI\SETI-Backend\SETI.WebApi\bin\Debug\net6.0\SETI.Core.pdb

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SETI.Core\SETI.Core.csproj" />
     <ProjectReference Include="..\SETI.Data\SETI.Data.csproj" />
   </ItemGroup>
 

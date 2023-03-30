@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SETI.WebApi", "SETI.WebApi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SETI.Data", "..\SETI.Data\SETI.Data.csproj", "{563A0182-1C28-47B2-AA7E-089D68C728A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SETI.Core", "..\SETI.Core\SETI.Core.csproj", "{D4132D19-2479-40BE-B525-80E1D74AB44E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{563A0182-1C28-47B2-AA7E-089D68C728A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4132D19-2479-40BE-B525-80E1D74AB44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4132D19-2479-40BE-B525-80E1D74AB44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4132D19-2479-40BE-B525-80E1D74AB44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4132D19-2479-40BE-B525-80E1D74AB44E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -889,6 +889,19 @@
           }
         }
       },
+      "SETI.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "SETI.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SETI.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SETI.Core.dll": {}
+        }
+      },
       "SETI.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2479,6 +2492,11 @@
         "version.txt"
       ]
     },
+    "SETI.Core/1.0.0": {
+      "type": "project",
+      "path": "../SETI.Core/SETI.Core.csproj",
+      "msbuildProject": "../SETI.Core/SETI.Core.csproj"
+    },
     "SETI.Data/1.0.0": {
       "type": "project",
       "path": "../SETI.Data/SETI.Data.csproj",
@@ -2489,6 +2507,7 @@
     "net6.0": [
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.15",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.15",
+      "SETI.Core >= 1.0.0",
       "SETI.Data >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
@@ -2526,6 +2545,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "C:\\Users\\jeanc\\OneDrive\\Escritorio\\SETI\\PruebaTecnica\\Desarrollo\\.NET-PruebaTecnica-SETI\\SETI-Backend\\SETI.Core\\SETI.Core.csproj": {
+              "projectPath": "C:\\Users\\jeanc\\OneDrive\\Escritorio\\SETI\\PruebaTecnica\\Desarrollo\\.NET-PruebaTecnica-SETI\\SETI-Backend\\SETI.Core\\SETI.Core.csproj"
+            },
             "C:\\Users\\jeanc\\OneDrive\\Escritorio\\SETI\\PruebaTecnica\\Desarrollo\\.NET-PruebaTecnica-SETI\\SETI-Backend\\SETI.Data\\SETI.Data.csproj": {
               "projectPath": "C:\\Users\\jeanc\\OneDrive\\Escritorio\\SETI\\PruebaTecnica\\Desarrollo\\.NET-PruebaTecnica-SETI\\SETI-Backend\\SETI.Data\\SETI.Data.csproj"
             }

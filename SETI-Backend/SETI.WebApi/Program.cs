@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
+using SETI.Core.Helpers;
+using SETI.Core.Services;
 using SETI.Data.Common;
+using SETI.Data.Interfaces.Helpers;
+using SETI.Data.Interfaces.Services;
 using SETI.WebApi;
 using System.Text;
 
@@ -25,6 +30,9 @@ builder.Services.AddCors(options =>
         builder.WithOrigins("*");
     });
 });
+
+// Cache Initial Configuration
+builder.Services.AddMemoryCache();
 
 // Initial application parameters
 var appSettingSection = builder.Configuration.GetSection("AppSettings");
@@ -62,6 +70,13 @@ builder.Services.AddDbContext<SetiDbContext>(options =>
 
 builder.Services.Configure<AppSettings>(appSettingSection);
 
+// Injecting services
+builder.Services.AddScoped<IManualAccessDb, ManualAccessDb>();
+builder.Services.AddScoped<IInvestmentProjectService, InvestmentProjectService>();
+builder.Services.AddScoped<IProjectMovementService, ProjectMovementService>();
+builder.Services.AddScoped<IOperations, Operations>();
+builder.Services.AddScoped<IReportService, ReportService>();
+
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 var app = builder.Build();
@@ -74,6 +89,18 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Setting Cache data
+var scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    var provider = scope.ServiceProvider;
+
+    var _investmentProjectService = provider.GetRequiredService<IInvestmentProjectService>();
+    var currentValidProjects = _investmentProjectService.GetCurrentValidProjects();
+    
+    provider.GetRequiredService<IMemoryCache>().Set("CurrentValidProjects", currentValidProjects);
+}
 
 app.UseCors(x =>
     x.AllowAnyOrigin()
