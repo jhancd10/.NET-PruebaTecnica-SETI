@@ -9,6 +9,6 @@ namespace SETI.Data.Interfaces.Services
 {
     public interface IReportService
     {
-        Task<List<PaybackResultDto>> TiempoRecuperacionInversion();
+        List<PaybackResultDto> TiempoRecuperacionInversion();
     }
 }

@@ -8,6 +8,6 @@ namespace SETI.Data.Interfaces.Helpers
 {
     public interface IOperations
     {
-        Task<(int, decimal)> GetPaybackByProjectId(int projectId, decimal investmentAmount);
+        (int, decimal) GetPaybackByProjectId(int projectId, decimal investmentAmount);
     }
 }

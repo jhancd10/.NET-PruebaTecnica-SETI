@@ -6,6 +6,7 @@ using SETI.Data.Interfaces.Helpers;
 using SETI.Data.Interfaces.Services;
 using SETI.WebApi;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,68 +17,66 @@ namespace SETI.Core.Services
     public class ReportService : IReportService
     {
         private readonly IMemoryCache _cache;
-        private readonly IProjectMovementService _projectMovementService;
         private readonly IOperations _operations;
 
         public ReportService(
             IMemoryCache cache,
-            IProjectMovementService projectMovementService,
             IOperations operations)
         {
             _cache = cache;
-            _projectMovementService = projectMovementService;
             _operations = operations;
         }
 
-        public async Task<List<PaybackResultDto>> TiempoRecuperacionInversion()
+        public List<PaybackResultDto> TiempoRecuperacionInversion()
         {
-            List<PaybackResultDto> BrokersDetailResponse = new();
+            var currentValidProjects = (List<InitialProject>)_cache.Get("CurrentValidProjects");
 
-            var currentValidProjects = (List<InitialProject>) _cache.Get("CurrentValidProjects");
+            var brokersId = currentValidProjects
+                .Select(x => x.BrokerId).DistinctBy(x => x).ToList();
 
-            PaybackResultDto paybackResult = null!;
+            ConcurrentBag<PaybackResultDto> BrokersDetailConcurrent = new();
 
-            int brokerTmp = 0;
-            int projectxBroker = 1;
+            //foreach (var brokerId in brokersId)
+            Parallel.ForEach(brokersId, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, brokerId =>
+            {
+                var brokerProjects = currentValidProjects
+                    .Where(x => x.BrokerId == brokerId).ToList();
 
-            foreach (var project in currentValidProjects) 
-            { 
-                if (brokerTmp != project.BrokerId)
+                var paybackResult = new PaybackResultDto()
                 {
-                    if (brokerTmp != 0)
-                    {
-                        paybackResult.ProjectsCount = projectxBroker;
+                    BrokerId = brokerId,
+                    ProjectsCount = brokerProjects.Count
+                };
 
-                        paybackResult.PaybackAverage = 
-                            paybackResult.ProjectsDetail.Select(x => x.Payback).Average();
-                        
-                        BrokersDetailResponse.Add(paybackResult);
-                    }
+                ConcurrentBag<PaybackDetail> ProjectsDetailConcurrent = new();
 
-                    paybackResult = new PaybackResultDto()
-                    {
-                        BrokerId = project.BrokerId,
-                        ProjectsCount = projectxBroker,
-                        ProjectsDetail = new List<PaybackDetail>()
-                    };
-
-                    brokerTmp = project.BrokerId;
-                    projectxBroker = 1;
-                }
-
-                else projectxBroker++;
-
-                var payback = await _operations.GetPaybackByProjectId(project.ProjectId, project.InvestmentAmount);
-
-                paybackResult.ProjectsDetail.Add(new PaybackDetail()
+                //foreach (var project in brokerProjects)
+                Parallel.ForEach(brokerProjects, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, project =>
                 {
-                    ProjectId = project.ProjectId,
-                    InvestmentAmount = project.InvestmentAmount,
-                    Periods = payback.Item1,
-                    Payback = payback.Item2
+                    var payback = _operations.GetPaybackByProjectId(project.ProjectId, project.InvestmentAmount);
+
+                    ProjectsDetailConcurrent.Add(new PaybackDetail()
+                    {
+                        ProjectId = project.ProjectId,
+                        InvestmentAmount = project.InvestmentAmount,
+                        Periods = payback.Item1,
+                        Payback = payback.Item2,
+                        PaybackPeriodsRelation = (payback.Item2 / payback.Item1)
+                    });
                 });
-            }
-            return BrokersDetailResponse.OrderBy(x => x.PaybackAverage).ToList();
+
+                paybackResult.ProjectsDetail = ProjectsDetailConcurrent.ToList();
+
+                paybackResult.PaybackAverage =
+                    paybackResult.ProjectsDetail.Select(x => x.Payback).Average();
+
+                paybackResult.PaybackPeriodsRelationAverage =
+                    paybackResult.ProjectsDetail.Select(x => x.PaybackPeriodsRelation).Average();
+
+                BrokersDetailConcurrent.Add(paybackResult);
+            });
+
+            return BrokersDetailConcurrent.OrderBy(x => x.PaybackPeriodsRelationAverage).ToList();
         }
     }
 }

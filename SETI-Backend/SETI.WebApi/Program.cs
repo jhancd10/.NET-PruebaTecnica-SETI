@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using SETI.Core.Helpers;
 using SETI.Core.Services;
+using SETI.Data.Class;
 using SETI.Data.Common;
 using SETI.Data.Interfaces.Helpers;
 using SETI.Data.Interfaces.Services;
@@ -98,8 +99,28 @@ using (var scope = scopeFactory.CreateScope())
 
     var _investmentProjectService = provider.GetRequiredService<IInvestmentProjectService>();
     var currentValidProjects = _investmentProjectService.GetCurrentValidProjects();
+
+    var projectsId = currentValidProjects.Select(x => x.ProjectId).ToList();
+    var projectMovements = new List<InitialProjectMovement>();
+
+    using (var setiDbContext = provider.GetRequiredService<SetiDbContext>())
+    {
+        projectMovements = (from pm in setiDbContext.ProjectMovement
+                            join dr in setiDbContext.DiscountRate
+                            on pm.PeriodId equals dr.PeriodId
+                            where projectsId.Contains(pm.ProjectId.Value)
+                            select new InitialProjectMovement()
+                            {
+                                MovementId = pm.MovementId,
+                                MovementAmount = pm.MovementAmount,
+                                PeriodId = pm.PeriodId.Value,
+                                ProjectId = pm.ProjectId.Value,
+                                DiscountRatePercentage = Convert.ToDecimal(dr.DiscountRatePercentage) / 100
+                            }).ToList();
+    }
     
     provider.GetRequiredService<IMemoryCache>().Set("CurrentValidProjects", currentValidProjects);
+    provider.GetRequiredService<IMemoryCache>().Set("ProjectMovements", projectMovements);
 }
 
 app.UseCors(x =>

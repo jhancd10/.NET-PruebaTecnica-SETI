@@ -12,6 +12,7 @@ namespace SETI.Data.DTO
         public int ProjectsCount { get; set; }
         public List<PaybackDetail> ProjectsDetail { get; set; }
         public decimal PaybackAverage { get; set; }
+        public decimal PaybackPeriodsRelationAverage { get; set; }
     }
 
     public class PaybackDetail
@@ -20,5 +21,6 @@ namespace SETI.Data.DTO
         public decimal InvestmentAmount { get; set; }
         public int Periods { get; set; }
         public decimal Payback { get; set; }
+        public decimal PaybackPeriodsRelation { get; set; }
     }
 }

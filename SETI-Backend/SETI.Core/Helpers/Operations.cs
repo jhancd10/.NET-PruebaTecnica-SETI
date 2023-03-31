@@ -19,9 +19,9 @@ namespace SETI.Core.Helpers
             _projectMovementService = projectMovementService;
         }
 
-        public async Task<(int, decimal)> GetPaybackByProjectId(int projectId, decimal investmentAmount)
+        public (int, decimal) GetPaybackByProjectId(int projectId, decimal investmentAmount)
         {
-            var movements = await _projectMovementService.GetMovementsByProjectId(projectId);
+            var movements = _projectMovementService.GetMovementsByProjectId(projectId);
 
             int periodo = 0;
             decimal diff = investmentAmount * (-1);
