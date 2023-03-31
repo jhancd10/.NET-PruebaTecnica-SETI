@@ -19,7 +19,10 @@ namespace SETI.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> TiempoRecuperacionInversion()
         {
-            var reportResponse = await _reportService.TiempoRecuperacionInversion();
+            var reportResponse = await Task.Run(() =>
+                _reportService.TiempoRecuperacionInversion()
+            );
+
             return Ok(reportResponse);
         }
 

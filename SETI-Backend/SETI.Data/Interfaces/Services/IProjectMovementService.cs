@@ -1,4 +1,5 @@
-﻿using SETI.WebApi;
+﻿using SETI.Data.Class;
+using SETI.WebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SETI.Data.Interfaces.Services
 {
     public interface IProjectMovementService
     {
-        Task<List<ProjectMovement>> GetMovementsByProjectId(int projectId);
+        List<InitialProjectMovement> GetMovementsByProjectId(int projectId);
     }
 }

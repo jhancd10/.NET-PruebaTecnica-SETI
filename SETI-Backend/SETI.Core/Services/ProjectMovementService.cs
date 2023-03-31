@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using SETI.Data.Class;
 using SETI.Data.Interfaces.Services;
 using SETI.WebApi;
 using System;
@@ -11,16 +13,21 @@ namespace SETI.Core.Services
 {
     public class ProjectMovementService : IProjectMovementService
     {
-        private readonly SetiDbContext _setiDbContext;
+        private readonly IMemoryCache _cache;
 
-        public ProjectMovementService(SetiDbContext setiDbContext)
+        public ProjectMovementService(
+            IMemoryCache cache)
         {
-            _setiDbContext = setiDbContext;
+            _cache = cache;
         }
 
-        public async Task<List<ProjectMovement>> GetMovementsByProjectId(int projectId) 
-            => await _setiDbContext.ProjectMovement
-                    .Where(x => x.ProjectId == projectId)
-                    .OrderBy(x => x.MovementId).ToListAsync();
+        public List<InitialProjectMovement> GetMovementsByProjectId(int projectId)
+        {
+            var projectMovements = (List<InitialProjectMovement>) _cache.Get("ProjectMovements");
+
+            return projectMovements
+                .Where(x =>  x.ProjectId == projectId)
+                .OrderBy(x => x.MovementId).ToList();
+        }
     }
 }
