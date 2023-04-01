@@ -49,5 +49,27 @@ namespace SETI.Core.Helpers
 
             return (movements.Count, (periodo - 1) + ((investmentAmount - benefit) / ft));
         }
+
+        public (int, decimal) GetVanByProjectId(int projectId, decimal investmentAmount)
+        {
+            var movements = _projectMovementService.GetMovementsByProjectId(projectId);
+
+            int periodo = 0;
+            decimal summation = 0;
+
+            foreach (var movement in movements)
+            {
+                periodo++;
+
+                var divider = Convert.ToDouble(1 + movement.DiscountRatePercentage);
+                var powResult = Convert.ToDecimal(Math.Pow(divider, periodo));
+
+                summation += movement.MovementAmount / powResult;
+            }
+
+            decimal initialInvestmentAmount = investmentAmount * (-1);
+
+            return (movements.Count, (initialInvestmentAmount + summation));
+        }
     }
 }

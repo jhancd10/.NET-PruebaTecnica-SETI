@@ -9,5 +9,6 @@ namespace SETI.Data.Interfaces.Helpers
     public interface IOperations
     {
         (int, decimal) GetPaybackByProjectId(int projectId, decimal investmentAmount);
+        (int, decimal) GetVanByProjectId(int projectId, decimal investmentAmount);
     }
 }

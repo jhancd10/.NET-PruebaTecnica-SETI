@@ -36,7 +36,6 @@ namespace SETI.Core.Services
 
             ConcurrentBag<PaybackResultDto> BrokersDetailConcurrent = new();
 
-            //foreach (var brokerId in brokersId)
             Parallel.ForEach(brokersId, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, brokerId =>
             {
                 var brokerProjects = currentValidProjects
@@ -50,7 +49,6 @@ namespace SETI.Core.Services
 
                 ConcurrentBag<PaybackDetail> ProjectsDetailConcurrent = new();
 
-                //foreach (var project in brokerProjects)
                 Parallel.ForEach(brokerProjects, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, project =>
                 {
                     var payback = _operations.GetPaybackByProjectId(project.ProjectId, project.InvestmentAmount);
@@ -77,6 +75,52 @@ namespace SETI.Core.Services
             });
 
             return BrokersDetailConcurrent.OrderBy(x => x.PaybackPeriodsRelationAverage).ToList();
+        }
+
+        public List<VanResultDto> BeneficioGeneradoInversion()
+        {
+            var currentValidProjects = (List<InitialProject>)_cache.Get("CurrentValidProjects");
+
+            var brokersId = currentValidProjects
+                .Select(x => x.BrokerId).DistinctBy(x => x).ToList();
+
+            ConcurrentBag<VanResultDto> BrokersDetailConcurrent = new();
+
+            Parallel.ForEach(brokersId, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, brokerId =>
+            {
+                var brokerProjects = currentValidProjects
+                    .Where(x => x.BrokerId == brokerId).ToList();
+
+                var vanResult = new VanResultDto()
+                {
+                    BrokerId = brokerId,
+                    ProjectsCount = brokerProjects.Count
+                };
+
+                ConcurrentBag<VanDetail> ProjectsDetailConcurrent = new();
+
+                Parallel.ForEach(brokerProjects, new ParallelOptions() { MaxDegreeOfParallelism = 10 }, project =>
+                {
+                    var van = _operations.GetVanByProjectId(project.ProjectId, project.InvestmentAmount);
+
+                    ProjectsDetailConcurrent.Add(new VanDetail()
+                    {
+                        ProjectId = project.ProjectId,
+                        InvestmentAmount = project.InvestmentAmount,
+                        Periods = van.Item1,
+                        Van = van.Item2
+                    });
+                });
+
+                vanResult.ProjectsDetail = ProjectsDetailConcurrent.ToList();
+
+                vanResult.VanAverage =
+                    vanResult.ProjectsDetail.Select(x => x.Van).Average();
+
+                BrokersDetailConcurrent.Add(vanResult);
+            });
+
+            return BrokersDetailConcurrent.OrderByDescending(x => x.VanAverage).ToList();
         }
     }
 }

@@ -25,15 +25,17 @@ namespace SETI.WebApi.Controllers
 
             return Ok(reportResponse);
         }
-
+         
         //[Authorize]
-        /*[Route("api/[controller]/[action]")]
+        [Route("api/[controller]/[action]")]
         [HttpGet]
         public async Task<IActionResult> BeneficioGeneradoInversion()
         {
-            //return BadRequest("Se ha producido un error inesperado, vuelve a intentarlo.");
+            var reportResponse = await Task.Run(() =>
+                _reportService.BeneficioGeneradoInversion()
+            );
 
-            return Ok(true);
-        }*/
+            return Ok(reportResponse);
+        }
     }
 }
