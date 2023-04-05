@@ -1,14 +1,7 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using SETI.Core.Helpers;
-using SETI.Data.Class;
+﻿using SETI.Data.Class;
 using SETI.Data.Interfaces.Helpers;
 using SETI.Data.Interfaces.Services;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SETI.Core.Services
 {
@@ -29,6 +22,7 @@ namespace SETI.Core.Services
             var periodYear = DateTime.Now.Year;
             var periodMonth = DateTime.Now.Month;
 
+            // Query para obtener la informacion de los proyectos validos
             var currentProjectsQuery = "select IP.BrokerId, IP.ProjectId, IP.InvestmentAmount " +
                                        "from InvestmentProject IP " +
                                        "where IP.ProjectId not in ( " +

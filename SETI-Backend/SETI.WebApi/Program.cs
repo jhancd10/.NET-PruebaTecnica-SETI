@@ -38,28 +38,6 @@ builder.Services.AddMemoryCache();
 // Initial application parameters
 var appSettingSection = builder.Configuration.GetSection("AppSettings");
 
-// JWT
-var appSetting = appSettingSection.Get<AppSettings>();
-var tokenKey = Encoding.ASCII.GetBytes(appSetting.TokenSecretKey);
-
-builder.Services.AddAuthentication(d =>
-{
-    d.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    d.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-}).AddJwtBearer(d =>
-{
-    d.RequireHttpsMetadata = false;
-    d.SaveToken = true;
-    d.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(tokenKey),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-    };
-});
-
 // Configuring SETIDb connection
 var setiConnectionString = builder.Configuration.GetConnectionString("SetiConnectionString");
 
@@ -75,7 +53,6 @@ builder.Services.Configure<AppSettings>(appSettingSection);
 builder.Services.AddScoped<IManualAccessDb, ManualAccessDb>();
 builder.Services.AddScoped<IInvestmentProjectService, InvestmentProjectService>();
 builder.Services.AddScoped<IProjectMovementService, ProjectMovementService>();
-builder.Services.AddScoped<IOperations, Operations>();
 builder.Services.AddScoped<IReportService, ReportService>();
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
@@ -97,14 +74,19 @@ using (var scope = scopeFactory.CreateScope())
 {
     var provider = scope.ServiceProvider;
 
+    // Obtengo una instancia del Servicio _investmentProjectService
     var _investmentProjectService = provider.GetRequiredService<IInvestmentProjectService>();
+    
+    // Obtengo la data de los proyectos validos en el periodo sgte al mes de ejecucion
     var currentValidProjects = _investmentProjectService.GetCurrentValidProjects();
 
+    // Listado de identificadores de proyectos para consultar sus movimientos
     var projectsId = currentValidProjects.Select(x => x.ProjectId).ToList();
     var projectMovements = new List<InitialProjectMovement>();
 
     using (var setiDbContext = provider.GetRequiredService<SetiDbContext>())
     {
+        // Usando EF Core realizo una consulta a la BD y obtengo todos los movimientos de los proyectos
         projectMovements = (from pm in setiDbContext.ProjectMovement
                             join dr in setiDbContext.DiscountRate
                             on pm.PeriodId equals dr.PeriodId
@@ -119,7 +101,10 @@ using (var scope = scopeFactory.CreateScope())
                             }).ToList();
     }
     
+    // Guardo en cache la Data de los Brokers y Proyectos validos
     provider.GetRequiredService<IMemoryCache>().Set("CurrentValidProjects", currentValidProjects);
+    
+    // Guardo en cache los Movimientos de los Proyectos validos
     provider.GetRequiredService<IMemoryCache>().Set("ProjectMovements", projectMovements);
 }
 

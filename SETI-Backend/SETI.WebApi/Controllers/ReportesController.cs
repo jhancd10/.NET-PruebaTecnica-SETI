@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SETI.Data.Enumerables;
 using SETI.Data.Interfaces.Services;
 
 namespace SETI.WebApi.Controllers
@@ -14,28 +14,30 @@ namespace SETI.WebApi.Controllers
             _reportService = reportService;
         }
 
-        //[Authorize]
         [Route("api/[controller]/[action]")]
         [HttpGet]
         public async Task<IActionResult> TiempoRecuperacionInversion()
         {
             var reportResponse = await Task.Run(() =>
-                _reportService.TiempoRecuperacionInversion()
+                _reportService.ReportGenerator(OperationType.Payback)
             );
 
-            return Ok(reportResponse);
+            /* El endpoint responde un listado ordenado por el Promedio de Payback
+               de cada Broker */
+            return Ok(reportResponse.OrderBy(x => x.OperationPeriodsRelationAverage).ToList());
         }
          
-        //[Authorize]
         [Route("api/[controller]/[action]")]
         [HttpGet]
         public async Task<IActionResult> BeneficioGeneradoInversion()
         {
             var reportResponse = await Task.Run(() =>
-                _reportService.BeneficioGeneradoInversion()
+                _reportService.ReportGenerator(OperationType.Van)
             );
 
-            return Ok(reportResponse);
+            /* El endpoint responde un listado descendente ordenado por el Promedio de VAN
+               de cada Broker */
+            return Ok(reportResponse.OrderByDescending(x => x.Average).ToList());
         }
     }
 }

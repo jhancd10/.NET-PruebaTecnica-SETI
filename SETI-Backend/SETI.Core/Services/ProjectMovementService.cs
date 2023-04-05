@@ -1,13 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using SETI.Data.Class;
 using SETI.Data.Interfaces.Services;
-using SETI.WebApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SETI.Core.Services
 {
@@ -25,6 +18,7 @@ namespace SETI.Core.Services
         {
             var projectMovements = (List<InitialProjectMovement>) _cache.Get("ProjectMovements");
 
+            // Query para obtener los movimientos de un proyecto por identificador
             return projectMovements
                 .Where(x =>  x.ProjectId == projectId)
                 .OrderBy(x => x.MovementId).ToList();

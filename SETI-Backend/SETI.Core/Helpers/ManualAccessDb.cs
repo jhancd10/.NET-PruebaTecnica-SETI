@@ -1,14 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Protocols;
 using SETI.Data.Common;
 using SETI.Data.Interfaces.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SETI.Core.Helpers
 {
@@ -26,6 +20,7 @@ namespace SETI.Core.Helpers
         {
             DataSet dataSetResponse = new();
 
+            // Conexion Manual a la BD SQL para realizar Queries
             using (SqlConnection cnx = new SqlConnection(_connectionString))
             {
                 cnx.Open();
