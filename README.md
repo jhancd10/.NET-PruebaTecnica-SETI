@@ -30,7 +30,7 @@ REST Api en .NET Core 6 usando:
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## solución y revisión de Código:
+## Solución y revisión de Código:
 
 1. Clonar este repositorio.
 2. En la carpeta donde clone el repositorio dirigirse a la ruta: **SETI-Backend --> SETI.WebApi**
